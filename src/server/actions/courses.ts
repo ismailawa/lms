@@ -1,0 +1,77 @@
+'use server';
+import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
+
+import { getValidAuthTokens } from '@/lib/cookies';
+
+export async function createCourse(title: string) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify({ title }),
+      }
+    );
+
+    if (response.ok) {
+      revalidateTag('courses');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error);
+  }
+}
+
+export async function getInstructorsCourse() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/instructors`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        next: { tags: ['courses'] },
+      }
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error);
+  }
+}
+
+export async function updateCourse(id: any, payload: Record<string, any>) {
+  console.log(getValidAuthTokens({ cookies }));
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
