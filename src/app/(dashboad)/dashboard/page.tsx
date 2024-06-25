@@ -1,16 +1,32 @@
+'use client';
 import GetStarted from '@/components/dashboard/GetStarted';
 import { getInstructorsCourse } from '@/server/actions/courses';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const page = async () => {
-  const data = await getInstructorsCourse();
+const Dashboard = () => {
+  const [isFirst, setIsFirst] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getInstructorsCourse();
+      if (data.data.courses) {
+        setIsFirst(data.data.courses.length === 0);
+      }
+    };
+    fetchData();
+  }, [isFirst]);
+
   return (
-    <div className='w-full sm:max-w-5xl mx-auto'>
-      <div className='flex flex-col w-full'>
-        {data.data.courses.lenght === 0 && <GetStarted />}
-      </div>
+    <div className='flex flex-col w-full'>
+      {isFirst ? (
+        <div className='w-full sm:max-w-5xl mx-auto'>
+          <GetStarted />
+        </div>
+      ) : (
+        <div>Dashboard</div>
+      )}
     </div>
   );
 };
 
-export default page;
+export default Dashboard;

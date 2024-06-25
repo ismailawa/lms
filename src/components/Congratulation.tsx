@@ -44,7 +44,7 @@ const Congratulation = () => {
           <Button
             className='w-full'
             onClick={() => {
-              globalContext.setCongratulation(false);
+              // globalContext.setCongratulation(false);
               router.replace('/student-dashboard');
             }}
           >

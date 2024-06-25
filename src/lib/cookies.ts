@@ -4,6 +4,7 @@ import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 // helpers to get cookies
 const getAuthCookie = (name: string, options: Record<string, any>) => {
   const cookie = getCookie(name, options);
+  console.log(cookie);
 
   if (!cookie) return undefined;
 

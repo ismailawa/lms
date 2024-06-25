@@ -25,6 +25,8 @@ export type DynamicCardProps = InputProps & {
   title: string;
   selectOption?: any[];
   onSubmit?: (value: any) => void;
+  onValueChange?: (value: any) => void;
+  defaultValue?: any;
   inputType?:
     | 'text'
     | 'text-area'
@@ -40,6 +42,8 @@ const DynamicCard = ({
   title,
   inputType,
   onSubmit,
+  onValueChange,
+  defaultValue,
   ...props
 }: DynamicCardProps) => {
   const [isEditting, setIsEditting] = useState(false);
@@ -55,9 +59,6 @@ const DynamicCard = ({
             {...props}
             className={`${isEditting ? 'bg-[#fefefe]' : ''}`}
             disabled={!isEditting}
-            onChange={(event) => {
-              setValue(event.target.value);
-            }}
           />
         );
 
@@ -65,9 +66,8 @@ const DynamicCard = ({
         return (
           <Select
             disabled={!isEditting}
-            onValueChange={(value) => {
-              setValue(value);
-            }}
+            onValueChange={onValueChange}
+            defaultValue={defaultValue}
           >
             <SelectTrigger className='w-full'>
               <SelectValue placeholder='Select a Category' />

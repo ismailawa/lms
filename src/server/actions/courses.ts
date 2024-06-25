@@ -53,6 +53,30 @@ export async function getInstructorsCourse() {
     throw new Error(error);
   }
 }
+export async function getCourseAction(id: any) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        next: { tags: ['courses'] },
+      }
+    );
+    const data = await response.json();
+
+    // console.log(data);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error);
+  }
+}
 
 export async function updateCourse(id: any, payload: Record<string, any>) {
   console.log(getValidAuthTokens({ cookies }));
@@ -62,6 +86,26 @@ export async function updateCourse(id: any, payload: Record<string, any>) {
       `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}`,
       {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function enrollCourse(id: any, payload: Record<string, any>) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}/enrollment`,
+      {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
