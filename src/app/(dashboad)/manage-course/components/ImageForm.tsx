@@ -13,41 +13,44 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { CldUploadWidget } from 'next-cloudinary';
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from 'next-cloudinary';
 import { CloudUpload } from 'lucide-react';
 import Image from 'next/image';
 import { updateCourse } from '@/server/actions/courses';
 import { showToast } from '@/utils/showToast';
 
 const formSchema = z.object({
-  image: z.object({
+  cover: z.object({
     id: z.string(),
     url: z.string(),
     secureUrl: z.string(),
+    signature: z.string(),
     format: z.string(),
     width: z.number(),
     height: z.number(),
     type: z.string(),
     assetId: z.string(),
     publicId: z.string(),
-    duration: z.number(),
   }),
 });
 
 type ImageFormProps = {
   initialData: {
-    image:
+    cover:
       | {
           id: string;
           url: string;
           secureUrl: string;
           format: string;
+          signature: string;
           width: number;
           height: number;
           type: string;
           assetId: string;
           publicId: string;
-          duration: number;
         }
       | undefined;
   };
@@ -55,69 +58,6 @@ type ImageFormProps = {
 };
 
 const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
-  // const [isEditting, setIsEditting] = useState(false);
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: initialData,
-  // });
-  // const { isSubmitting, isValid } = form.formState;
-  // const onSubmit = async (values: z.infer<typeof formSchema>) => {};
-  // return (
-  //   <div className='flex flex-col w-full gap-2 bg-white p-4'>
-  //     <Form {...form}>
-  //       <form onSubmit={form.handleSubmit(onSubmit)}>
-  //         <div className='flex justify-between w-full'>
-  //           <h1 className=' text-sm'>Cover Image</h1>
-  //           <Button
-  //             variant={'ghost'}
-  //             onClick={() => {
-  //               setIsEditting(!isEditting);
-  //             }}
-  //           >
-  //             <PencilIcon size={15} className=' cursor-pointer mr-2' />
-  //             Edit Image
-  //           </Button>
-  //         </div>
-  //         <div className='my-3'>
-  //           <Separator />
-  //         </div>
-  //         <div className=' my-3'>
-  //           <FormField
-  //             control={form.control}
-  //             name='image'
-  //             render={({ field }) => (
-  //               <FormItem>
-  //                 <FormControl>
-
-  //                 </FormControl>
-  //                 {/* <FormMessage /> */}
-  //               </FormItem>
-  //             )}
-  //           />
-  //         </div>
-  //         {isEditting && (
-  //           <div className='flex justify-between w-full text-sm mt-2'>
-  //             <div
-  //               onClick={() => {
-  //                 setIsEditting(!isEditting);
-  //               }}
-  //               className='flex justify-center items-center bg-red-500 px-2 py-1 text-white min-w-[80px] rounded-sm cursor-pointer'
-  //             >
-  //               Cancel
-  //             </div>
-  //             <div
-  //               onClick={() => {}}
-  //               className='flex justify-center items-center bg-green-500 px-2 py-1 text-white  min-w-[80px] rounded-sm cursor-pointer'
-  //             >
-  //               Save
-  //             </div>
-  //           </div>
-  //         )}
-  //       </form>
-  //     </Form>
-  //   </div>
-  // );
-
   const [isEditting, setIsEditting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -126,9 +66,25 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
 
   const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSuccess = async (
+    results: CloudinaryUploadWidgetResults,
+    widget: any
+  ) => {
     try {
-      const result = await updateCourse(courseId, values);
+      const result = await updateCourse(courseId, {
+        cover: {
+          id: (results?.info as any).id,
+          url: (results?.info as any).url,
+          secureUrl: (results?.info as any).secure_url,
+          format: (results?.info as any).format,
+          width: (results?.info as any).width,
+          height: (results?.info as any).height,
+          type: (results?.info as any).resource_type,
+          assetId: (results?.info as any).asset_id,
+          publicId: (results?.info as any).public_id,
+          signature: (results?.info as any).signature,
+        },
+      });
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
       } else {
@@ -168,10 +124,10 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       <div className=' my-2 h-[300px]'>
         {isEditting && (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form>
               <FormField
                 control={form.control}
-                name='image'
+                name='cover'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -185,13 +141,9 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
                               resourceType: 'image',
                               autoMinimize: false,
                               cropping: true,
-                              croppingAspectRatio: 1.3,
+                              croppingAspectRatio: 2,
                             }}
-                            onSuccess={async (result, { widget }) => {
-                              field.onChange({
-                                url: (result?.info as any).url,
-                              });
-                            }}
+                            onSuccess={onSuccess}
                             onError={(error, options) => {
                               showToast(
                                 'error',
@@ -222,7 +174,7 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
                   </FormItem>
                 )}
               />
-              <div className='flex justify-between w-full text-sm mt-5'>
+              {/* <div className='flex justify-between w-full text-sm mt-5'>
                 <Button
                   type='submit'
                   disabled={!isValid || isSubmitting}
@@ -230,16 +182,14 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
                 >
                   Save
                 </Button>
-              </div>
+              </div> */}
             </form>
           </Form>
         )}
 
-        {!isEditting && initialData?.image?.url && (
-          <div className='flex justify-center items-center w-full h-[300px]  rounded-md relative '>
-            <div className='w-full h-full relative'>
-              <Image src={initialData?.image?.url} alt='images' fill />
-            </div>
+        {!isEditting && initialData?.cover && (
+          <div className='flex justify-center  items-center w-full h-[300px]  rounded-md relative '>
+            <Image src={initialData?.cover?.url} alt='images' fill />
           </div>
         )}
       </div>

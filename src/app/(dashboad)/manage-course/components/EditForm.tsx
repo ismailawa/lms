@@ -31,7 +31,7 @@ const EditForm = ({ data, categories }: EditFormProps) => {
             />
 
             <ImageForm
-              initialData={{ image: undefined }}
+              initialData={{ cover: data.data.cover }}
               courseId={data.data.id}
             />
 
