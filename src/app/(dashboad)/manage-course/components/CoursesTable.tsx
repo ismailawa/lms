@@ -79,7 +79,7 @@ const CoursesTable = ({ courses }: CoursesTableProps) => {
           <TableHead className=' text-center'>Action</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody className=' h-96'>
+      <TableBody className=''>
         {courses &&
           courses.map((item, index) => (
             <AppRow

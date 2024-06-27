@@ -9,7 +9,7 @@ interface ToastProviderProps {
 
 export default function ToastProvider({ children }: ToastProviderProps) {
   const contextClass = {
-    success: 'bg-blue-600',
+    success: 'bg-green-600',
     error: 'bg-red-600',
     info: 'bg-gray-600',
     warning: 'bg-orange-400',
@@ -25,7 +25,7 @@ export default function ToastProvider({ children }: ToastProviderProps) {
           contextClass[context?.type || 'default'] +
           ' relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer'
         }
-        bodyClassName={() => 'text-sm font-white block p-3'}
+        bodyClassName={() => ' flex text-sm font-white block p-3'}
         position='bottom-left'
         autoClose={3000}
       />

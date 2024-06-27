@@ -68,7 +68,7 @@ export async function getCourseAction(id: any) {
     );
     const data = await response.json();
 
-    // console.log(data);
+    console.log(data);
 
     return data;
   } catch (error: any) {
@@ -79,7 +79,7 @@ export async function getCourseAction(id: any) {
 }
 
 export async function updateCourse(id: any, payload: Record<string, any>) {
-  console.log(getValidAuthTokens({ cookies }));
+  console.log(id, payload, 'updateCourse');
 
   try {
     const response = await fetch(
@@ -93,6 +93,9 @@ export async function updateCourse(id: any, payload: Record<string, any>) {
         body: JSON.stringify(payload),
       }
     );
+    if (response.ok) {
+      revalidateTag('courses');
+    }
     const data = await response.json();
     return data;
   } catch (error: any) {

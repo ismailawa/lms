@@ -2,6 +2,7 @@ import React from 'react';
 import CoursesTable from './components/CoursesTable';
 import { getInstructorsCourse } from '@/server/actions/courses';
 import AddCourseTitle from '@/components/dashboard/AddCourseTitle';
+import { getCategoriesAction } from '@/server/actions/categories';
 
 const Courses = async () => {
   const data = await getInstructorsCourse();

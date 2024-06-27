@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import GlobalContextProvider from '@/context/GlobalContextProvider';
-import StepContextProvider from '@/context/StepContextProvider';
 import ReactQueryProvider from '@/utils/react-query-provider';
 import ToastProvider from '@/components/ToastProvider';
 
