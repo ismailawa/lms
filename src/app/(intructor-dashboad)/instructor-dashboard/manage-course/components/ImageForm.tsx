@@ -169,6 +169,8 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
                                     try {
                                       open();
                                     } catch (error) {
+                                      console.log(error);
+
                                       showToast(
                                         'error',
                                         <p>Oops something went wrong</p>

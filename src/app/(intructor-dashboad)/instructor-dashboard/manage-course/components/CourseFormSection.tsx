@@ -10,6 +10,8 @@ import PriceForm from './PriceForm';
 import ImageForm from './ImageForm';
 import ResourcesForm from './ResourcesForm';
 import LessonForm from './LessonForm';
+import { showToast } from '@/utils/showToast';
+import { publishAndUnpublishCourseAction } from '@/server/actions/courses';
 
 type CourseFormSectionProps = {
   data: any;
@@ -37,46 +39,76 @@ const CourseFormSection = ({ data, categories }: CourseFormSectionProps) => {
   if (!isMounted) {
     return null;
   }
+
+  const togglePublish = async () => {
+    if (completedFields === totalFields) {
+      try {
+        const result = await publishAndUnpublishCourseAction(data.data.id);
+        if (result.success) {
+          showToast('success', <p>{result.message}</p>);
+        } else {
+          showToast('error', <p>{result.message}</p>);
+        }
+      } catch (error) {
+        showToast(
+          'error',
+          <p>Ooops something went wrong, please try again later</p>
+        );
+      }
+    } else {
+      showToast('warning', <p>You need to all the required fields</p>);
+    }
+  };
   return (
-    <div>
-      <div className='flex sm:flex-row flex-col w-full gap-5 py-3 justify-center'>
-        <div className='flex flex-col w-1/2  gap-3'>
-          <h1 className='font-semibold text-sm mb-4'>
-            Customize Your Course - Completed:{completedFields}/{totalFields}
+    <div className='flex sm:flex-row flex-col w-full gap-5 justify-center'>
+      <div className='flex flex-col w-1/2  gap-3'>
+        <div className='flex w-full items-center h-8'>
+          <h1 className='font-semibold text-sm'>
+            Customize Your Course -{' '}
+            <span className=' text-xs text-slate-400'>
+              Completed:{completedFields}/{totalFields}
+            </span>
           </h1>
-          <div className='flex flex-col gap-4'>
-            <TitleForm
-              initialData={{ title: data.data.title ?? '' }}
-              courseId={data.data.id}
-            />
+        </div>
+        <div className='flex flex-col gap-4'>
+          <TitleForm
+            initialData={{ title: data.data.title ?? '' }}
+            courseId={data.data.id}
+          />
 
-            <DescriptionForm
-              initialData={{ descriptions: data?.data?.descriptions ?? '' }}
-              courseId={data.data.id}
-            />
+          <DescriptionForm
+            initialData={{ descriptions: data?.data?.descriptions ?? '' }}
+            courseId={data.data.id}
+          />
 
-            <ImageForm
-              initialData={{ cover: data.data.cover }}
-              courseId={data.data.id}
-            />
+          <ImageForm
+            initialData={{ cover: data.data.cover }}
+            courseId={data.data.id}
+          />
 
-            <CategoryForm
-              initialData={{ categoryId: `${data?.data?.category?.id}` ?? '' }}
-              courseId={data.data.id}
-              options={categories}
-            />
+          <CategoryForm
+            initialData={{ categoryId: `${data?.data?.category?.id}` ?? '' }}
+            courseId={data.data.id}
+            options={categories}
+          />
+        </div>
+      </div>
+      <div className='flex flex-col items-center  w-1/2 gap-3'>
+        <div className='flex w-full justify-between items-center h-8'>
+          <h1 className='font-semibold  text-sm'>Course Lessons</h1>
+          <div className='flex gap-4 items-center '>
+            <Button
+              variant={data.data.isPublished ? 'secondary' : 'default'}
+              onClick={togglePublish}
+            >
+              {data.data.isPublished ? 'Unpublish' : 'Publish'}
+            </Button>
+            <Button variant={'outline'}>
+              <Trash2 />
+            </Button>
           </div>
         </div>
-        <div className='flex flex-col  w-1/2 gap-3 flex-shrink-0'>
-          <div className='flex w-full justify-between items-center'>
-            <h1 className='font-semibold  text-sm'>Course Lessons</h1>
-            <div className='flex gap-4 items-center '>
-              <Button variant={'outline'}>Publish</Button>
-              <Button variant={'outline'}>
-                <Trash2 />
-              </Button>
-            </div>
-          </div>
+        <div className='flex flex-col gap-4 w-full'>
           <LessonForm
             initialData={{ title: '' }}
             courseId={data.data.id}

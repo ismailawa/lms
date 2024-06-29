@@ -47,6 +47,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
       const result = await updateCourse(courseId, values);
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
+        form.reset();
       } else {
         showToast('error', <p>{result.message}</p>);
       }

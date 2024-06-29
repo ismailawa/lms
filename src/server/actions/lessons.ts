@@ -81,3 +81,26 @@ export async function updateLessonAction(
     throw new Error(error);
   }
 }
+
+export async function publishAndUnpublishAction(id: any) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/lessons/${id}/toggle-publish`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify({}),
+      }
+    );
+    if (response.ok) {
+      revalidateTag('lessons');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

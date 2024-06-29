@@ -47,6 +47,7 @@ const LessonTitleForm = ({ initialData, lessonId }: LessonTitleFormProps) => {
       const result = await updateLessonAction(lessonId, values);
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
+        setIsEditting((v) => !v);
       } else {
         showToast('error', <p>{result.message}</p>);
       }

@@ -18,17 +18,14 @@ const SidebarItems = ({
   onClick,
 }: SidebarItemsProps) => {
   const pathname = usePathname();
-  const isActive =
-    (pathname == '/' && href == '/') ||
-    pathname == href ||
-    pathname.startsWith(`${href}/`);
+  const isActive = (pathname == '/' && href == '/') || pathname == href;
 
   return (
     <Link
       href={href!}
       onClick={onClick}
       className={cn(
-        'flex items-center gap-x-2 rounded-xl text-sm text-gray-600 font-medium px-2 transition-all duration-300  hover:text-green-300',
+        'flex items-center gap-x-2 rounded-xl text-xs text-gray-600 font-medium px-2 transition-all duration-300  hover:text-green-300',
         isActive && 'text-green-500   hover:text-green-300 font-semibold'
       )}
     >

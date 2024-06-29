@@ -9,6 +9,7 @@ import {
   GroupIcon,
   Accessibility,
   GitCommitVerticalIcon,
+  LucideView,
 } from 'lucide-react';
 
 export const publicRoutes = ['/home'];
@@ -31,7 +32,7 @@ export const routesInstructor = [
   {
     type: 'item',
     icon: BookOpen,
-    label: 'Mtg Courses',
+    label: 'Courses',
     href: '/instructor-dashboard/manage-course',
   },
   {
@@ -83,6 +84,12 @@ export const routesStudent = [
     type: 'item',
     icon: BookOpen,
     label: 'My Courses',
+    href: '/student-dashboard/my-courses',
+  },
+  {
+    type: 'item',
+    icon: LucideView,
+    label: 'Browse Courses',
     href: '/student-dashboard/courses',
   },
   {

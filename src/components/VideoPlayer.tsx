@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 type MyVideoPlayerProps = {
   id: string;
-  src: string;
+  src?: string;
   width?: number;
   height?: number;
 };
@@ -25,12 +25,12 @@ const MyVideoPlayer = ({ id, src, width, height }: MyVideoPlayerProps) => {
         width={1000}
         height={600}
         controls={true}
-        src='mymakaranta-video/xqutjr8s5muubzoidfwl'
+        src={id}
         onEnded={() => {}}
         colors={{
-          base: '#079207',
-          text: '#000',
-          accent: '#fff',
+          base: '#05670d',
+          text: '#ffffff',
+          accent: '#00ff73',
         }}
       />
     </div>

@@ -50,6 +50,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
       if (result.success) {
         setIsEditting((v) => !v);
         showToast('success', <p>{result.message}</p>);
+        form.reset();
       } else {
         showToast('error', <p>{result.message}</p>);
       }
@@ -88,7 +89,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
       <div className='my-1'>
         <Separator />
       </div>
-      <div className='flex flex-coll'>
+      <div className='flex flex-col justify-center items-center h-full'>
         {isEditting && (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -116,11 +117,13 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
           </Form>
         )}
         {!isEditting && (
-          <div>
+          <div className='flex  w-full h-full'>
             {initialData.descriptions ? (
               <Preview value={initialData.descriptions} />
             ) : (
-              <h1>No Description</h1>
+              <div className='flex w-full h-full justify-center items-center '>
+                <h1 className=' items-center'>No Description</h1>
+              </div>
             )}
           </div>
         )}

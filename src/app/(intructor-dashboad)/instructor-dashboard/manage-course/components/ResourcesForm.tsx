@@ -129,7 +129,7 @@ const ResourcesForm = ({ initialData, courseId }: ImageFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <div className='flex justify-center items-center w-full h-[200px]  rounded-md relative '>
+                      <div className='flex justify-center items-center w-full min-h-[300px]  rounded-md relative '>
                         {isEditting && (
                           <CldUploadWidget
                             options={{
@@ -181,7 +181,7 @@ const ResourcesForm = ({ initialData, courseId }: ImageFormProps) => {
         {!isEditting && (
           <div>
             {initialData.resources.length > 0 ? (
-              <div className='flex flex-col w-full gap-1'>
+              <div className='flex flex-col w-full gap-1 min-h-[300px]'>
                 {initialData?.resources.map((file: any, index) => (
                   <div
                     className='flex w-full items-center justify-between gap-2 bg-white p-2 rounded-md'
@@ -201,7 +201,7 @@ const ResourcesForm = ({ initialData, courseId }: ImageFormProps) => {
                 ))}
               </div>
             ) : (
-              <div className='flex flex-col justify-center  items-center w-full h-[200px]   rounded-md'>
+              <div className='flex flex-col justify-center  items-center w-full min-h-[300px]   rounded-md'>
                 <ImageIcon size={50} className='text-gray-500' />
                 <p className='text-sm text-gray-500'>No resources available</p>
               </div>

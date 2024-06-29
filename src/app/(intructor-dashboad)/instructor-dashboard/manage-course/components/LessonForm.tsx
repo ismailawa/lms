@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, PlusIcon } from 'lucide-react';
+import { ListVideo, Loader2, PlusIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import {
@@ -83,6 +83,7 @@ const LessonForm = ({ initialData, courseId, lessons }: LessonFormProps) => {
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
         setIsUpating((v) => !v);
+        form.reset();
       } else {
         showToast('error', <p>{result.message}</p>);
       }
@@ -126,7 +127,7 @@ const LessonForm = ({ initialData, courseId, lessons }: LessonFormProps) => {
       <div className='my-1'>
         <Separator />
       </div>
-      <div className=' my-2'>
+      <div className='my-2 '>
         {isUpdating && (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -159,12 +160,21 @@ const LessonForm = ({ initialData, courseId, lessons }: LessonFormProps) => {
             </form>
           </Form>
         )}
-        {!isUpdating && (
+
+        {!isUpdating && lessons.length > 0 && (
           <LessonList
             onEdit={onEdit}
             onReOrder={updateReOrder}
             lessons={lessons}
           />
+        )}
+        {!isUpdating && lessons.length <= 0 && (
+          <div className='flex w-full h-full'>
+            <div className='flex flex-col w-full h-full justify-center items-center '>
+              <ListVideo size={50} className=' text-slate-300' />
+              <h1 className='text-slate-400'>No lessons Added yet</h1>
+            </div>
+          </div>
         )}
       </div>
     </div>

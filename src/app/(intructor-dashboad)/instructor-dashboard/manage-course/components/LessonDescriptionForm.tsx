@@ -16,6 +16,7 @@ import {
 import { updateLessonAction } from '@/server/actions/lessons';
 import { showToast } from '@/utils/showToast';
 import Editor from './Editor';
+import Preview from './Preview';
 
 const formSchema = z.object({
   descriptions: z.string().min(3, { message: 'Course title is required' }),
@@ -52,6 +53,7 @@ const LessonDescriptionForm = ({
       if (result.success) {
         setIsEditting((v) => !v);
         showToast('success', <p>{result.message}</p>);
+        form.reset();
       } else {
         showToast('error', <p>{result.message}</p>);
       }
@@ -90,7 +92,7 @@ const LessonDescriptionForm = ({
       <div className='my-1'>
         <Separator />
       </div>
-      <div className='flex flex-coll'>
+      <div className='flex flex-coll w-full h-full'>
         {isEditting && (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -118,7 +120,15 @@ const LessonDescriptionForm = ({
           </Form>
         )}
         {!isEditting && (
-          <p dangerouslySetInnerHTML={{ __html: initialData.descriptions }}></p>
+          <div className='flex  w-full h-full'>
+            {initialData.descriptions ? (
+              <Preview value={initialData.descriptions} />
+            ) : (
+              <div className='flex w-full h-full justify-center items-center'>
+                <h1 className=' items-center'>No Description</h1>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

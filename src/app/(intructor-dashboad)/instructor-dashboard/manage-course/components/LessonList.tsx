@@ -54,7 +54,7 @@ const LessonList = ({ lessons, onReOrder, onEdit }: LessonListProps) => {
                 {(provided) => (
                   <div
                     className={cn(
-                      'flex items-center gap-x-2 bg-slate-200 border border-slate-200 rounded-md text-slate-700 mb-2 text-sm',
+                      'flex w-full items-center gap-x-2 bg-slate-200 border border-slate-200 rounded-md text-slate-700 mb-2 text-sm',
                       item.isPublished &&
                         ' bg-sky-100 border-sky-200 text-sky-700'
                     )}

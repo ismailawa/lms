@@ -21,6 +21,7 @@ import { CloudUpload } from 'lucide-react';
 import Image from 'next/image';
 import { updateLessonAction } from '@/server/actions/lessons';
 import { showToast } from '@/utils/showToast';
+import MyVideoPlayer from '@/components/VideoPlayer';
 
 const formSchema = z.object({
   video: z.object({
@@ -198,12 +199,7 @@ const VideoForm = ({ initialData, lessonId }: VideoFormProps) => {
 
         {!isEditting && initialData?.video && (
           <div className='flex justify-center  items-center w-full   rounded-md relative '>
-            <Image
-              src={initialData?.video?.url}
-              alt='images'
-              height={initialData?.video.height}
-              width={initialData?.video.width}
-            />
+            <MyVideoPlayer id={initialData?.video.publicId} />
           </div>
         )}
       </div>

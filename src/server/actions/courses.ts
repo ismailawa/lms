@@ -61,6 +61,29 @@ export async function createLesson(
   }
 }
 
+export async function getAllPublishedCourses() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/published`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        next: { tags: ['courses'] },
+      }
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error);
+  }
+}
+
 export async function getInstructorsCourse() {
   try {
     const response = await fetch(
@@ -97,8 +120,6 @@ export async function getCourseAction(id: any) {
       }
     );
     const data = await response.json();
-
-    console.log(data);
 
     return data;
   } catch (error: any) {
@@ -146,6 +167,10 @@ export async function enrollCourse(id: any, payload: Record<string, any>) {
         body: JSON.stringify(payload),
       }
     );
+
+    if (response.ok) {
+      revalidateTag('courses');
+    }
     const data = await response.json();
     return data;
   } catch (error: any) {
@@ -169,6 +194,32 @@ export async function updateReOrderAction(
         body: JSON.stringify(payload),
       }
     );
+    const data = await response.json();
+    if (response.ok) {
+      revalidateTag('courses');
+    }
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function publishAndUnpublishCourseAction(id: any) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}/toggle-publish`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify({}),
+      }
+    );
+    if (response.ok) {
+      revalidateTag('courses');
+    }
     const data = await response.json();
     return data;
   } catch (error: any) {

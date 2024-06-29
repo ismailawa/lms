@@ -50,6 +50,7 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
         setIsEditting((v) => !v);
+        form.reset();
       } else {
         showToast('error', <p>{result.message}</p>);
       }
