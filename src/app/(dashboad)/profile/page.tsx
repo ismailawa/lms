@@ -4,52 +4,19 @@ import { GetServerSideProps } from 'next';
 import ProfileCard from '@/components/dashboard/ProfileCard';
 
 
-interface ProfileProps {
-  profile: {
-    name: string;
-    firstName: string;
-    lastName: string; 
-    role: string;
-    location: string;
-    email: string;
-    phone: string;
-    bio: string;
-    address: {
-      country: string;
-      city: string;
-      postalCode: string;
-      taxId: string;
-    };
-  };
-}
+const Profile = async () => {
+  const profile = await getUserProfile();
 
+  if (!profile) {
+    return <div className="p-4 md:p-8 lg:p-12">Error fetching profile data</div>;
+  }
 
-
-const Profile: React.FC<ProfileProps> = ({ profile }) => {
   return (
-    <div className="bg-gray-100 min-h-screen p-4 md:p-6">
+    <div className="bg-white min-h-screen p-4 md:p-6">
       <h1 className="text-2xl font-bold mb-4 md:mb-6">My Profile</h1>
       <ProfileCard profile={profile} />
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const profile = await getUserProfile();
-    return {
-      props: {
-        profile
-      }
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        profile: null
-      }
-    };
-  }
 };
 
 export default Profile;
