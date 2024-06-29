@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import MyVideoPlayer from '../VideoPlayer';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import CourseEnrollment from './CourseEnrollment';
@@ -17,7 +16,7 @@ const CourseCard = ({ data }: CourseCardProps) => {
       <div
         className=' relative flex w-full h-40 bg-black rounded-lg overflow-hidden cursor-pointer'
         onClick={() => {
-          router.push('/courses/12');
+          router.push(`/student-dashboard/courses/${data.id}`);
         }}
       >
         <Image src={data.cover.url} alt='' fill />
