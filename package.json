@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.6.0",
     "@hookform/resolvers": "^3.4.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -39,6 +40,7 @@
     "lucide-react": "^0.379.0",
     "next": "14.2.3",
     "next-cloudinary": "^6.6.2",
+    "quill": "^2.0.2",
     "react": "^18",
     "react-confetti": "^6.1.0",
     "react-day-picker": "^8.10.1",
@@ -47,6 +49,7 @@
     "react-froala-wysiwyg": "^4.2.1",
     "react-hook-form": "^7.51.5",
     "react-loader-spinner": "^6.1.6",
+    "react-quill": "^2.0.0",
     "react-spinners": "^0.13.8",
     "react-step-progress-bar": "^1.0.3",
     "react-toastify": "^10.0.5",

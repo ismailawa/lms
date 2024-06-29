@@ -15,8 +15,6 @@ import { CloudUpload } from 'lucide-react';
 import { Input, InputProps } from './ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import DynamicInputWrapper from './DynamicInputWrapper';
-import FileInput from './FileInput';
-import MultiFileInput from './MultiFileInput';
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { Button } from './ui/button';

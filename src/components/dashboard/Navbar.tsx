@@ -37,7 +37,7 @@ const Navbar = () => {
           <div
             className='flex gap-2 items-center cursor-pointer'
             onClick={() => {
-              router.push('/profile');
+              router.push('/student-dashboard/profile');
             }}
           >
             <div className='relative w-10 h-10 rounded-full bg-zinc-200 overflow-hidden border-2'>
