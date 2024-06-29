@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,23 +13,40 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { updateCourse } from '@/server/actions/courses';
 import { showToast } from '@/utils/showToast';
+import CreateCategory from '@/components/dashboard/CreateCategory';
 
 const formSchema = z.object({
-  price: z.string(),
+  categoryId: z.string(),
 });
 
-type PriceFormProps = {
+type CategoryFormProps = {
   initialData: {
-    price: string;
+    categoryId: string;
   };
   courseId: string;
+  options: any;
 };
 
-const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
+const CategoryForm = ({
+  initialData,
+  courseId,
+  options,
+}: CategoryFormProps) => {
   const [isEditting, setIsEditting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
@@ -41,6 +58,7 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
     try {
       const result = await updateCourse(courseId, values);
       if (result.success) {
+        setIsEditting((v) => !v);
         showToast('success', <p>{result.message}</p>);
       } else {
         showToast('error', <p>{result.message}</p>);
@@ -52,11 +70,13 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
       );
     }
   };
-
+  if (!isMounted) {
+    return null;
+  }
   return (
     <div className='flex flex-col w-full gap-2 bg-white p-4'>
       <div className='flex justify-between w-full items-center'>
-        <h1 className=' text-sm'>Course Title</h1>
+        <h1 className=' text-sm'>Course Category</h1>
         <Button
           variant={'ghost'}
           onClick={() => {
@@ -66,7 +86,7 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
           {!isEditting ? (
             <>
               <PencilIcon size={15} className=' cursor-pointer mr-2' />
-              Edit title
+              Edit Category
             </>
           ) : (
             <>Cancel</>
@@ -82,17 +102,29 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name='price'
+                name='categoryId'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        placeholder='N 3,000.00'
-                        type='number'
-                        className={`${isEditting ? 'bg-[#fefefe]' : ''}`}
-                        disabled={!isEditting}
-                        {...field}
-                      />
+                      <Select
+                        disabled={isSubmitting}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className='w-full'>
+                          <SelectValue placeholder='Select a Category' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {options &&
+                            options.map((cat: any, index: number) => (
+                              <SelectItem value={`${cat.id}`} key={index}>
+                                {cat.title}
+                              </SelectItem>
+                            ))}
+
+                          <CreateCategory />
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,11 +143,17 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
           </Form>
         )}
         {!isEditting && (
-          <p className='p-2 text-sm font-semibold'>N {initialData.price}</p>
+          <p className='p-2 text-sm font-semibold'>
+            {
+              options.filter(
+                (val: any) => `${val.id}` === `${initialData.categoryId}`
+              )[0]?.title
+            }
+          </p>
         )}
       </div>
     </div>
   );
 };
 
-export default PriceForm;
+export default CategoryForm;

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,11 +19,11 @@ import {
 } from 'next-cloudinary';
 import { CloudUpload } from 'lucide-react';
 import Image from 'next/image';
-import { updateCourse } from '@/server/actions/courses';
+import { updateLessonAction } from '@/server/actions/lessons';
 import { showToast } from '@/utils/showToast';
 
 const formSchema = z.object({
-  cover: z.object({
+  video: z.object({
     id: z.string(),
     url: z.string(),
     secureUrl: z.string(),
@@ -37,9 +37,9 @@ const formSchema = z.object({
   }),
 });
 
-type ImageFormProps = {
+type VideoFormProps = {
   initialData: {
-    cover:
+    video:
       | {
           id: string;
           url: string;
@@ -54,11 +54,15 @@ type ImageFormProps = {
         }
       | undefined;
   };
-  courseId: string;
+  lessonId: string;
 };
 
-const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
+const VideoForm = ({ initialData, lessonId }: VideoFormProps) => {
   const [isEditting, setIsEditting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
@@ -71,8 +75,8 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
     widget: any
   ) => {
     try {
-      const result = await updateCourse(courseId, {
-        cover: {
+      const result = await updateLessonAction(lessonId, {
+        video: {
           id: (results?.info as any).id,
           url: (results?.info as any).url,
           secureUrl: (results?.info as any).secure_url,
@@ -87,6 +91,7 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       });
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
+        setIsEditting((v) => !v);
       } else {
         showToast('error', <p>{result.message}</p>);
       }
@@ -97,6 +102,10 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       );
     }
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className='flex flex-col w-full gap-2 bg-white p-4'>
@@ -121,13 +130,13 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
       <div className='my-1'>
         <Separator />
       </div>
-      <div className=' my-2 h-[300px]'>
+      <div className=' my-2 min-h-[300px]'>
         {isEditting && (
           <Form {...form}>
             <form>
               <FormField
                 control={form.control}
-                name='cover'
+                name='video'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -138,7 +147,7 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
                               sources: ['local'],
                               multiple: false,
                               maxFiles: 1,
-                              resourceType: 'image',
+                              resourceType: 'video',
                               autoMinimize: false,
                               cropping: true,
                               croppingAspectRatio: 2,
@@ -187,9 +196,14 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           </Form>
         )}
 
-        {!isEditting && initialData?.cover && (
-          <div className='flex justify-center  items-center w-full h-[300px]  rounded-md relative '>
-            <Image src={initialData?.cover?.url} alt='images' fill />
+        {!isEditting && initialData?.video && (
+          <div className='flex justify-center  items-center w-full   rounded-md relative '>
+            <Image
+              src={initialData?.video?.url}
+              alt='images'
+              height={initialData?.video.height}
+              width={initialData?.video.width}
+            />
           </div>
         )}
       </div>
@@ -197,4 +211,4 @@ const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
   );
 };
 
-export default ImageForm;
+export default VideoForm;

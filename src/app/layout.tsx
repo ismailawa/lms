@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import GlobalContextProvider from '@/context/GlobalContextProvider';
-import ReactQueryProvider from '@/utils/react-query-provider';
+
 import ToastProvider from '@/components/ToastProvider';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -21,9 +21,7 @@ export default function RootLayout({
     <html lang='en'>
       <body suppressHydrationWarning={true} className={inter.className}>
         <GlobalContextProvider>
-          <ReactQueryProvider>
-            <ToastProvider>{children}</ToastProvider>
-          </ReactQueryProvider>
+          <ToastProvider>{children}</ToastProvider>
         </GlobalContextProvider>
       </body>
     </html>

@@ -35,7 +35,7 @@ const CoursesTable = ({ courses }: CoursesTableProps) => {
       <TableCell
         className=' cursor-pointer'
         onClick={() => {
-          router.push(`/manage-course/edit/${id}`);
+          router.push(`/instructor-dashboard/manage-course/edit/${id}`);
         }}
       >
         {title}

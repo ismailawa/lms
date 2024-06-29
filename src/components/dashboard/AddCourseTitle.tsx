@@ -26,7 +26,9 @@ const AddCourseTitle = ({ title = 'Get Started' }: { title?: string }) => {
       setIsLoading(true);
       const result = await createCourse(inputValue);
       if (result.success) {
-        router.push(`/manage-course/edit/${result.data.id}`);
+        router.push(
+          `/instructor-dashboard/manage-course/edit/${result.data.id}`
+        );
         showToast('success', <p>{result.message}</p>);
       } else {
         showToast('error', <p>{result.message}</p>);

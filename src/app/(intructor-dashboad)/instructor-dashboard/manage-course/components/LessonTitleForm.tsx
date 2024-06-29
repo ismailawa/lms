@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,29 +14,27 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { updateCourse } from '@/server/actions/courses';
+import { updateLessonAction } from '@/server/actions/lessons';
 import { showToast } from '@/utils/showToast';
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/js/plugins/align.min.js';
-import 'froala-editor/js/plugins/char_counter.min.js';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-
-import FroalaEditorComponent from 'react-froala-wysiwyg';
 
 const formSchema = z.object({
-  descriptions: z.string().min(3, { message: 'Course title is required' }),
+  title: z.string().min(3, { message: 'Course title is required' }),
 });
 
-type DescriptionFormProps = {
+type LessonTitleFormProps = {
   initialData: {
-    descriptions: string;
+    title: string;
   };
-  courseId: string;
+  lessonId: string;
 };
 
-const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
+const LessonTitleForm = ({ initialData, lessonId }: LessonTitleFormProps) => {
   const [isEditting, setIsEditting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
@@ -46,7 +44,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const result = await updateCourse(courseId, values);
+      const result = await updateLessonAction(lessonId, values);
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
       } else {
@@ -60,10 +58,14 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
     }
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <div className='flex flex-col w-full gap-2 bg-white p-4'>
       <div className='flex justify-between w-full items-center'>
-        <h1 className=' text-sm'>Course Description</h1>
+        <h1 className=' text-sm'>Lesson Title</h1>
         <Button
           variant={'ghost'}
           onClick={() => {
@@ -73,7 +75,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
           {!isEditting ? (
             <>
               <PencilIcon size={15} className=' cursor-pointer mr-2' />
-              Edit Description
+              Edit Title
             </>
           ) : (
             <>Cancel</>
@@ -89,41 +91,15 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name='descriptions'
+                name='title'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <FroalaEditorComponent
-                        tag='textarea'
-                        model={field.value}
-                        onModelChange={field.onChange}
-                        options={{
-                          toolbarButtons: [
-                            'bold',
-                            'italic',
-                            'underline',
-                            'alignRight',
-                            'alignCenter',
-                            'alignLeft',
-                            'outdent',
-                            'indent',
-                            'undo',
-                            'redo',
-                            'clearFormatting',
-                            'selectAll',
-                          ],
-
-                          pluginsEnabled: ['align', 'charCounter'],
-
-                          charCounterMax: 140,
-                        }}
+                      <Input
+                        disabled={isSubmitting}
+                        className={`${isEditting ? 'bg-[#fefefe]' : ''}`}
+                        {...field}
                       />
-                      {/* <Textarea
-                          placeholder='Type your message here.'
-                          className={`h-20 ${isEditting ? 'bg-[#fefefe]' : ''}`}
-                          disabled={isSubmitting}
-                          {...field}
-                        /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -142,11 +118,11 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
           </Form>
         )}
         {!isEditting && (
-          <p dangerouslySetInnerHTML={{ __html: initialData.descriptions }}></p>
+          <p className='p-2 text-sm font-semibold'>{initialData.title}</p>
         )}
       </div>
     </div>
   );
 };
 
-export default DescriptionForm;
+export default LessonTitleForm;

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,6 +30,11 @@ type TitleFormProps = {
 
 const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const [isEditting, setIsEditting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
@@ -52,6 +57,10 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
       );
     }
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className='flex flex-col w-full gap-2 bg-white p-4'>

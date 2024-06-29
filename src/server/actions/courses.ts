@@ -30,6 +30,36 @@ export async function createCourse(title: string) {
     throw new Error(error);
   }
 }
+export async function createLesson(
+  title: string,
+  courseId: number,
+  position: number
+) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/lessons`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify({ title, courseId }),
+      }
+    );
+
+    if (response.ok) {
+      revalidateTag('courses');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error);
+  }
+}
 
 export async function getInstructorsCourse() {
   try {
@@ -107,6 +137,29 @@ export async function enrollCourse(id: any, payload: Record<string, any>) {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}/enrollment`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+export async function updateReOrderAction(
+  id: any,
+  payload: Record<string, any>
+) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}/reorder`,
       {
         method: 'PATCH',
         headers: {

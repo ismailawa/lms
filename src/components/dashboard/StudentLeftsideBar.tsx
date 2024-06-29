@@ -10,26 +10,12 @@ import { LogOut, ArrowDownUp } from 'lucide-react';
 import { useGlobalContext } from '@/context/GlobalContextProvider';
 import { useRouter } from 'next/navigation';
 import { logoutAction } from '@/server/actions/authentication';
+import { routesStudent } from '@/router/routes';
 
-const LeftsideBar = () => {
+const StudentLeftsideBar = () => {
   const router = useRouter();
   const globalContext = useGlobalContext();
-  const switchAccount = () => {
-    if (globalContext.userType === 'student') {
-      router.push('/dashboard');
-    }
-    if (globalContext.userType === 'instructor') {
-      router.push('/student-dashboard');
-    }
-    globalContext.setUserType(
-      globalContext.userType === 'student' ? 'instructor' : 'student'
-    );
 
-    localStorage.setItem(
-      'userType',
-      globalContext.userType === 'student' ? 'instructor' : 'student'
-    );
-  };
   return (
     <div className='hidden sm:block w-[200px] fixed shadow inset-y-0 bg-white z-10'>
       <div className='flex flex-col w-full h-full p-6 gap-4'>
@@ -38,11 +24,32 @@ const LeftsideBar = () => {
         </div>
         <Separator className='bg-green-500' />
         <div className='mt-5 flex-1'>
-          <SidebarRoute />
+          <div className='flex flex-col w-full gap-1 flex-1'>
+            {routesStudent &&
+              routesStudent.map((route: any, index: any) => {
+                if (route.type === 'separator')
+                  return (
+                    <div
+                      className=' w-full h-[0.5px] bg-slate-500'
+                      key={index}
+                    />
+                  );
+                return (
+                  <SidebarItems
+                    icon={route.icon}
+                    label={route.label}
+                    href={route.href}
+                    key={index}
+                  />
+                );
+              })}
+          </div>
         </div>
         <div
           className=' bg-green-500 flex gap-2 justify-center items-center py-2 px-3 rounded-md text-white cursor-pointer'
-          onClick={switchAccount}
+          onClick={() => {
+            router.push('/instructor-dashboard');
+          }}
         >
           Switch <ArrowDownUp />
         </div>
@@ -61,4 +68,4 @@ const LeftsideBar = () => {
   );
 };
 
-export default LeftsideBar;
+export default StudentLeftsideBar;
