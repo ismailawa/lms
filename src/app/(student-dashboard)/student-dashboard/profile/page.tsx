@@ -1,11 +1,24 @@
-import { getUserProfile } from '@/server/actions/users';
-import React from 'react';
-import { GetServerSideProps } from 'next';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import ProfileCard from '@/components/dashboard/ProfileCard';
+import { getUserProfile } from '@/server/actions/users';
 
+const Profile = () => {
+  const [profile, setProfile] = useState(null);
 
-const Profile = async () => {
-  const profile = await getUserProfile();
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getUserProfile();
+        setProfile(data);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   if (!profile) {
     return <div className="p-4 md:p-8 lg:p-12">Error fetching profile data</div>;
