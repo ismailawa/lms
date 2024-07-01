@@ -43,7 +43,7 @@ const CourseCard = ({ data }: CourseCardProps) => {
             38 Lessons
           </div>
         </div>
-        <CourseEnrollment />
+        <CourseEnrollment course={data} user={{}} />
       </div>
     </div>
   );

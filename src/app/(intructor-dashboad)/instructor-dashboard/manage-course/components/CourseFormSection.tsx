@@ -18,11 +18,6 @@ type CourseFormSectionProps = {
   categories?: any;
 };
 const CourseFormSection = ({ data, categories }: CourseFormSectionProps) => {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   if (!data) {
     return null;
   }
@@ -36,12 +31,10 @@ const CourseFormSection = ({ data, categories }: CourseFormSectionProps) => {
   ];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
-  if (!isMounted) {
-    return null;
-  }
+  const isCompleted = requiredFields.every(Boolean);
 
   const togglePublish = async () => {
-    if (completedFields === totalFields) {
+    if (isCompleted) {
       try {
         const result = await publishAndUnpublishCourseAction(data.data.id);
         if (result.success) {
@@ -98,6 +91,7 @@ const CourseFormSection = ({ data, categories }: CourseFormSectionProps) => {
           <h1 className='font-semibold  text-sm'>Course Lessons</h1>
           <div className='flex gap-4 items-center '>
             <Button
+              disabled={!isCompleted}
               variant={data.data.isPublished ? 'secondary' : 'default'}
               onClick={togglePublish}
             >

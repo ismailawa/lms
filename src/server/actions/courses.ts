@@ -84,6 +84,29 @@ export async function getAllPublishedCourses() {
   }
 }
 
+export async function getAllPublishedCourseLessons(id: any) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/courses/${id}/lessons`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getValidAuthTokens({ cookies }).token}`,
+        },
+        next: { tags: ['courses'] },
+      }
+    );
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw new Error(error);
+  }
+}
+
 export async function getInstructorsCourse() {
   try {
     const response = await fetch(

@@ -18,9 +18,10 @@ const LessonCreationSection = ({ lesson }: LessonCreationSection) => {
   const requiredFields = [lesson.title, lesson.descriptions, lesson.video];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
+  const isCompleted = requiredFields.every(Boolean);
 
   const togglePublish = async () => {
-    if (completedFields === totalFields) {
+    if (isCompleted) {
       try {
         const result = await publishAndUnpublishAction(lesson.id);
         if (result.success) {
@@ -75,6 +76,7 @@ const LessonCreationSection = ({ lesson }: LessonCreationSection) => {
           </div>
           <div className='flex gap-2 items-center '>
             <Button
+              disabled={!isCompleted}
               variant={lesson.isPublished ? 'secondary' : 'default'}
               onClick={togglePublish}
             >

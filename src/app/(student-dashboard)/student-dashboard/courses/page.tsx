@@ -38,6 +38,7 @@ const page = () => {
           </div>
         </div>
         <div className='grid grid-cols-4 w-full gap-5'>
+          {/* <CourseCard />
           <CourseCard />
           <CourseCard />
           <CourseCard />
@@ -48,8 +49,7 @@ const page = () => {
           <CourseCard />
           <CourseCard />
           <CourseCard />
-          <CourseCard />
-          <CourseCard />
+          <CourseCard /> */}
         </div>
       </div>
     </div>
