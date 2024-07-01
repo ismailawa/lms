@@ -28,7 +28,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, avatar, role, locat
   };
 
   return (
-    <div className="flex md:flex-row items-center justify-between md:items-start space-x-0 md:space-x-4 space-y-4 md:space-y-0 border-2 border-gray-100 p-2">
+    <div className="flex md:flex-row items-center justify-between md:items-start space-x-0 md:space-x-4 space-y-4 md:space-y-0 border-2 border-gray-50 rounded-md p-2">
       <div className='flex'>
       <Image src="/images/avatar.jpeg" alt={name} width={64} height={64} className="md:w-16 md:h-16 rounded-full" />
       <div className="text-center md:text-left ">

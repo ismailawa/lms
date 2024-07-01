@@ -43,7 +43,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ initialData, onUpdate }
 
   return (
     <div className="mt-6 space-y-6">
-      <div className="bg-white border-2 border-gray-100 rounded p-6">
+      <div className="bg-white border-2 border-gray-50 rounded-md p-6">
        <div className='flex justify-between'>
           <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
           <div className="mt-4">
@@ -73,7 +73,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ initialData, onUpdate }
           )}
         </div>
       </div>
-      <div className="bg-white border-2 border-gray-100 rounded p-6">
+      <div className="bg-white border-2 border-gray-50 rounded-md p-6">
         <h3 className="text-lg font-semibold mb-4">Additional Information</h3>
         <div className="space-y-2">
           {isEditing ? (
@@ -91,7 +91,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ initialData, onUpdate }
           )}
         </div>
       </div>
-      <div className="bg-white border-2 border-gray-100 rounded p-6">
+      <div className="bg-white border-2 border-gray-50 rounded-md p-6">
         <h3 className="text-lg font-semibold mb-4">External Links</h3>
         <div className="space-y-2">
           {isEditing ? (

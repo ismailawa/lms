@@ -26,7 +26,7 @@ const Profile = () => {
 
   return (
     <div className="bg-white min-h-screen p-4 md:p-6">
-      <h1 className="text-2xl font-bold mb-4 md:mb-6">My Profile</h1>
+      <h1 className="text-xl font-bold mb-4 md:mb-6">My Profile</h1>
       <ProfileCard profile={profile} />
     </div>
   );
