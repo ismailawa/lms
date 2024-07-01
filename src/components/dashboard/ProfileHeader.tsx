@@ -28,10 +28,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, avatar, role, locat
   };
 
   return (
-    <div className="flex md:flex-row items-center justify-between md:items-start space-x-0 md:space-x-4 space-y-4 md:space-y-0 border-2 border-gray-100 p-2">
+    <div className="flex md:flex-col bg-white space-x-0 md:space-x-4 space-y-4 md:space-y-0 border-2 border-gray-50 rounded-md p-2">
+      <div className="mt-2 flex justify-end px-2">
+            <Button className='mr-1' variant="ghost" onClick={() => setIsEditing(!isEditing)}>
+              <PencilIcon size={15} className="mr-2" /> {isEditing ? 'Cancel' : 'Edit'}
+            </Button>
+            {isEditing && <Button onClick={handleSave} className='mb-2' >Save</Button>}
+      </div>
       <div className='flex'>
       <Image src="/images/avatar.jpeg" alt={name} width={64} height={64} className="md:w-16 md:h-16 rounded-full" />
-      <div className="text-center md:text-left ">
+      <div className=" space-y-2 w-full mr-4 ">
         {isEditing ? (
           <>
             <Input placeholder='Name' value={editableName} onChange={(e) => setEditableName(e.target.value)} />
@@ -48,12 +54,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, avatar, role, locat
           </>
         )}
       </div>
-      </div>
-      <div className="mt-4 ">
-            <Button className='mr-1' variant="ghost" onClick={() => setIsEditing(!isEditing)}>
-              <PencilIcon size={15} className="mr-2" /> {isEditing ? 'Cancel' : 'Edit'}
-            </Button>
-            {isEditing && <Button onClick={handleSave} className='mb-2' >Save</Button>}
       </div>
     </div>
   );
