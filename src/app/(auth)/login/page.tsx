@@ -130,12 +130,18 @@ const Login = () => {
                   'Login'
                 )}
               </Button>
-              <Button variant='outline' className='flex flex-row gap-2 w-full'>
-                <div className=' w-5 h-5 relative'>
-                  <Image src={'/images/google.png'} alt='' fill />
-                </div>
-                Continue with Google
-              </Button>
+
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/google`}>
+                <Button
+                  variant='outline'
+                  className='flex flex-row gap-2 w-full'
+                >
+                  <div className=' w-5 h-5 relative'>
+                    <Image src={'/images/google.png'} alt='' fill />
+                  </div>
+                  Continue with Google
+                </Button>
+              </Link>
             </div>
             <div className='flex w-full justify-center  gap-1 mt-4'>
               <h1>Don&apos;t have an account?</h1>{' '}

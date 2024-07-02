@@ -2,12 +2,15 @@ import StudentLeftsideBar from '@/components/dashboard/StudentLeftsideBar';
 import Navbar from '@/components/dashboard/Navbar';
 
 import React from 'react';
+import { getUserProfile } from '@/server/actions/users';
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profile = await getUserProfile();
+
   return (
     <div className='flex flex-row relative bg-[#f2f2f2]'>
       <StudentLeftsideBar />
