@@ -8,7 +8,6 @@ import Billing from '@/components/dashboard/Billing';
 import Notifications from '@/components/dashboard/Notifications';
 import { getUserProfile } from '@/server/actions/users';
 import ProfileNav from '@/components/dashboard/ProfileNav';
-import Delete from '@/components/dashboard/Delete';
 
 interface UserProfile {
   name: string;
@@ -57,8 +56,6 @@ const Profile: React.FC = () => {
         return <Billing />;
       case 'notifications':
         return <Notifications />;
-      case 'delete':
-        return <Delete />;
       default:
         return <ProfileCard profile={profile} />;
     }
@@ -67,7 +64,7 @@ const Profile: React.FC = () => {
   return (
     <div className="min-h-screen">
       <h1 className="text-lg text-gray-500 font-bold mb-2 md:mb-3">Account Settings</h1>
-      <div className='flex gap-1 w-full'>
+      <div className='flex'>
         <ProfileNav setSelectedPage={setSelectedPage} />
         {renderSelectedPage()}
       </div>
