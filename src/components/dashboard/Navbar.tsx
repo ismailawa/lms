@@ -2,6 +2,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { Input } from '@/components/ui/input';
+import Notifications from './Notifications';
 import {
   SearchIcon,
   ChevronRightCircle,
@@ -32,7 +33,7 @@ const Navbar = () => {
         </div>
         <div className='flex items-center gap-3'>
           <MessageCirclePlusIcon />
-          <Bell />
+          <Notifications />
           <div className=' w-[0.3px] h-10 bg-slate-400' />
           <div
             className='flex gap-2 items-center cursor-pointer'
