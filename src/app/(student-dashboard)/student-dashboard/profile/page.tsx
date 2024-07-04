@@ -42,7 +42,9 @@ const Profile: React.FC = () => {
   }, []);
 
   if (!profile) {
-    return <div className="p-4 md:p-8 lg:p-12">Error fetching profile data</div>;
+    return (
+      <div className='p-4 md:p-8 lg:p-12'>Error fetching profile data</div>
+    );
   }
 
   const renderSelectedPage = () => {
@@ -65,9 +67,11 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <h1 className="text-lg text-gray-500 font-bold mb-2 md:mb-3">Account Settings</h1>
-      <div className='flex gap-1 w-full'>
+    <div className='min-h-screen'>
+      <h1 className='text-lg text-gray-500 font-bold mb-2 md:mb-3'>
+        Account Settings
+      </h1>
+      <div className='flex gap-3 w-full'>
         <ProfileNav setSelectedPage={setSelectedPage} />
         {renderSelectedPage()}
       </div>
@@ -76,7 +80,6 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
 
 // const Profile = async () => {
 //   const userProfile = await getUserProfile();
