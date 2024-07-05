@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Sheet,
   SheetClose,
@@ -11,7 +11,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet';
 import { Bell } from 'lucide-react';
 import { Separator } from '../ui/separator';
 
@@ -47,33 +47,32 @@ const Notifications: React.FC = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className='flex flex-1 flex-col bg-[#f8f8f8] border-4 border-solid border-white p-5 rounded-2xl'>
-      <h1 className='text-lg font-bold mb-4 md:mb-6'>Notification Settings</h1>
-      {/* Notification settings content here */}
-    </div>
-=======
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="rounded-full border-2 border-zinc-200">
+        <Button
+          variant='outline'
+          className='rounded-full border-2 border-zinc-200'
+        >
           <Bell />
         </Button>
       </SheetTrigger>
-      <SheetContent className="bg-[#f8f8f8] border-4 border-solid border-white p-5">
+      <SheetContent className='bg-[#f8f8f8] border-4 border-solid border-white p-5'>
         <SheetHeader className='mb-6'>
-          <SheetTitle className="text-sm font-bold">View all notifications</SheetTitle>
+          <SheetTitle className='text-sm font-bold'>
+            View all notifications
+          </SheetTitle>
         </SheetHeader>
         <div>
           {loading ? (
             <p>Loading notifications...</p>
           ) : error ? (
-            <p className="text-red-500">{error}</p>
+            <p className='text-red-500'>{error}</p>
           ) : notifications.length === 0 ? (
             <p>No notifications found.</p>
           ) : (
             <ul>
               {notifications.map((notification) => (
-                <li key={notification.id} className="mb-2">
+                <li key={notification.id} className='mb-2'>
                   {notification.message}
                 </li>
               ))}
@@ -83,7 +82,6 @@ const Notifications: React.FC = () => {
         </div>
       </SheetContent>
     </Sheet>
->>>>>>> 26cee226d086e0de372653a0e005ed12ccb72ea0
   );
 };
 
@@ -99,6 +97,3 @@ export default Notifications;
 //   ];
 //   res.status(200).json(notifications);
 // });
-
-
-
