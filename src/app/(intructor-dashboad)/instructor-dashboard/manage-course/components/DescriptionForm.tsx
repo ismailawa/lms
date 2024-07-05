@@ -67,7 +67,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   }
 
   return (
-    <div className='flex flex-col w-full gap-1 bg-white p-4 min-h-[200px]'>
+    <div className='flex flex-col w-full gap-1 bg-[#f8f8f8] border-4 border-solid border-white p-4 rounded-xl min-h-[200px]'>
       <div className='flex justify-between w-full items-center'>
         <h1 className=' text-sm'>Course Description</h1>
         <Button

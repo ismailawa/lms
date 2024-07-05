@@ -16,7 +16,7 @@ const Editor = ({ value, onChange }: EditorProps) => {
       [{ list: 'ordered' }, { list: 'bullet' }],
       ['link', 'image'],
       [{ align: [] }],
-      [{ color: [] }],
+      [{ color: ['black', 'green', 'gray', 'blue', 'yellow', 'pink'] }],
       ['code-block'],
       ['clean'],
     ],

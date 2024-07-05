@@ -100,7 +100,7 @@ const LessonForm = ({ initialData, courseId, lessons }: LessonFormProps) => {
   }
 
   return (
-    <div className=' relative flex flex-col w-full gap-2 bg-white p-4'>
+    <div className=' relative flex flex-col w-full gap-2 bg-[#f8f8f8] border-4 border-solid border-white p-4 rounded-xl'>
       {isCreating && (
         <div className='flex items-center justify-center absolute inset-0 bg-slate-700/20'>
           <Loader2 className=' animate-spin h-6 w-6 text-sky-700' />

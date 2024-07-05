@@ -5,11 +5,12 @@ import { getCategoriesAction } from '@/server/actions/categories';
 const Edit = async ({ params }: { params: any }) => {
   const data = await getCourseAction(params.id);
   const categories = await getCategoriesAction();
+  console.log(categories);
 
   return (
     <div className='flex flex-col gap-14 sm:max-w-5xl mx-auto w-full '>
       <h1 className=' text-2xl font-bold'>Course Creation</h1>
-      <CourseFormSection data={data} categories={categories} />
+      <CourseFormSection data={data} categories={categories.data} />
     </div>
   );
 };
