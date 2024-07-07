@@ -18,7 +18,7 @@ const EditLesson = async ({ params }: { params: { id: string } }) => {
   return (
     <div className='flex flex-col gap-4 sm:max-w-5xl  mx-auto w-full'>
       <Link
-        href={`/instructor-dashboard/manage-course/edit/${lesson.courseId}`}
+        href={`/instructor-dashboard/manage-course/edit/${lesson.data.courseId}`}
       >
         <div className='flex gap-2'>
           <ArrowLeftIcon />
@@ -27,7 +27,7 @@ const EditLesson = async ({ params }: { params: { id: string } }) => {
       </Link>
 
       <h1 className=' text-2xl font-bold'>Lesson Creation</h1>
-      <LessonCreationSection lesson={lesson} />
+      <LessonCreationSection lesson={lesson.data} />
     </div>
   );
 };

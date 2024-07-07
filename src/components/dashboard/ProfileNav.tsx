@@ -49,13 +49,6 @@ const ProfileNav: React.FC<ProfileNavProps> = ({ setSelectedPage }) => {
         >
           Billing
         </Link>
-        <Link
-          href='#'
-          onClick={() => setSelectedPage('notifications')}
-          className='hover:text-green-500'
-        >
-          Notifications
-        </Link>
       </ul>
       <AlertDialog>
         <AlertDialogTrigger className='text-sm text-red-500 font-bold mb-4 md:mb-6'>

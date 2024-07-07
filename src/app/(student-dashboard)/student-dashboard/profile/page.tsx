@@ -5,7 +5,6 @@ import ProfileCard from '@/components/dashboard/ProfileCard';
 import Security from '@/components/dashboard/Security';
 import Teams from '@/components/dashboard/Teams';
 import Billing from '@/components/dashboard/Billing';
-import Notifications from '@/components/dashboard/Notifications';
 import { getUserProfile } from '@/server/actions/users';
 import ProfileNav from '@/components/dashboard/ProfileNav';
 
@@ -56,8 +55,6 @@ const Profile: React.FC = () => {
         return <Teams />;
       case 'billing':
         return <Billing />;
-      case 'notifications':
-        return <Notifications />;
       default:
         return <ProfileCard profile={profile} />;
     }

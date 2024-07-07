@@ -80,6 +80,8 @@ const LessonForm = ({ initialData, courseId, lessons }: LessonFormProps) => {
         +courseId,
         lessons.length + 1
       );
+      console.log(result);
+      
       if (result.success) {
         showToast('success', <p>{result.message}</p>);
         setIsUpating((v) => !v);
