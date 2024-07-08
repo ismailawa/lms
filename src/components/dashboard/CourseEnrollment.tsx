@@ -3,7 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog';
 import { useFlutterwave } from 'flutterwave-react-v3';
 import closePaymentModal from 'flutterwave-react-v3';
 import { Checkbox } from '../ui/checkbox';
@@ -32,7 +37,7 @@ interface User {
 }
 
 interface CourseEnrollmentProps {
-  course: Course;
+  course: any;
   user: any;
 }
 
@@ -46,7 +51,7 @@ interface BillingDetails {
   saveCard: boolean;
 }
 
-const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({ course, user }) => {
+const CourseEnrollment = ({ course, user }: CourseEnrollmentProps) => {
   const [billingDetails, setBillingDetails] = useState<BillingDetails>({
     country: '',
     zipCode: '',
@@ -111,7 +116,7 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({ course, user }) => 
     handleFlutterPayment({
       callback: (response) => {
         console.log(response);
-      //  closePaymentModal(); // this will close the modal programmatically
+        //  closePaymentModal(); // this will close the modal programmatically
       },
       onClose: () => {},
     });
@@ -170,7 +175,12 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({ course, user }) => 
                 <div className='border border-[#CAE1C2] rounded-md'>
                   <div className='w-full flex justify-between bg-[#CAE1C2] p-4'>
                     <h1 className='text-xs font-bold'>Credit/Debit card</h1>
-                    <Image src='/images/card.png' alt='' width={50} height={20} />
+                    <Image
+                      src='/images/card.png'
+                      alt=''
+                      width={50}
+                      height={20}
+                    />
                   </div>
                   <div className='flex flex-col w-full p-4 gap-5'>
                     <div className='flex flex-col w-full'>
@@ -223,11 +233,13 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({ course, user }) => 
                 </div>
               </div>
               <div className='flex justify-between mt-2'>
-                <h1 className='text-xs font-bold'>Securely save this card for my later purchase</h1>
+                <h1 className='text-xs font-bold'>
+                  Securely save this card for my later purchase
+                </h1>
                 <Checkbox
-                  // name='saveCard'
-                  // checked={billingDetails.saveCard}
-                  // onChange={handleInputChange}
+                // name='saveCard'
+                // checked={billingDetails.saveCard}
+                // onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -287,6 +299,3 @@ const CourseEnrollment: React.FC<CourseEnrollmentProps> = ({ course, user }) => 
 };
 
 export default CourseEnrollment;
-
-
-
