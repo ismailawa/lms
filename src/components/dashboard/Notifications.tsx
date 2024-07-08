@@ -51,7 +51,7 @@ const Notifications: React.FC = () => {
       <SheetTrigger asChild>
         <Button
           variant='outline'
-          className='rounded-full border-2 border-zinc-200'
+          className='border-none'
         >
           <Bell />
         </Button>
