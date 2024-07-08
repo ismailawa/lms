@@ -14,6 +14,7 @@ import closePaymentModal from 'flutterwave-react-v3';
 import { Checkbox } from '../ui/checkbox';
 import { Separator } from '../ui/separator';
 import SelectCountry from './SelectCountry';
+import { DialogClose } from '@radix-ui/react-dialog';
 
 interface Course {
   id: number;
@@ -129,13 +130,16 @@ const CourseEnrollment = ({ course, user }: CourseEnrollmentProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className='flex w-full border-2 border-gray-300 justify-center items-center py-2 hover:text-white text-sm bg-green-500 hover:bg-green-600 text-black rounded-lg cursor-pointer'>
+        <Button className='flex w-full border-2 border-gray-300 justify-center items-center py-2 hover:text-white text-sm bg-green-500 hover:bg-green-600  rounded-lg cursor-pointer text-white'>
           Enroll Now
         </Button>
       </DialogTrigger>
       <DialogContent className='lg:w-[1000px] w-[100%]'>
-        <div className='w-full border border-[#CAE1C2] p-2 rounded-md'>
-          <DialogTitle className='text-sm'>Check Out</DialogTitle>
+        <div className='flex w-full justify-between items-center border border-[#CAE1C2] p-2 rounded-md'>
+          <DialogTitle className='text-sm ml-3'>Check Out</DialogTitle>
+          <DialogClose asChild>
+            <Button variant={'ghost'}>X</Button>
+          </DialogClose>
         </div>
         <div className='w-full'>
           <div className='flex lg:flex-row flex-col gap-3'>
