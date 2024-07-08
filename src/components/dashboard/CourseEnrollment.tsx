@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -9,12 +10,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+
 import { useFlutterwave } from 'flutterwave-react-v3';
 import closePaymentModal from 'flutterwave-react-v3';
 import { Checkbox } from '../ui/checkbox';
 import { Separator } from '../ui/separator';
-import SelectCountry from './SelectCountry';
 import { DialogClose } from '@radix-ui/react-dialog';
+import CourseSuccessful from './CourseSuccessful';
 
 interface Course {
   id: number;
@@ -47,6 +56,8 @@ interface BillingDetails {
   zipCode: string;
   nameOnCard: string;
   cardNumber: string;
+  accountName: string;
+  accountNumber: string;
   expiryDate: string;
   cvv: string;
   saveCard: boolean;
@@ -58,6 +69,8 @@ const CourseEnrollment = ({ course, user }: CourseEnrollmentProps) => {
     zipCode: '',
     nameOnCard: '',
     cardNumber: '',
+    accountName: '',
+    accountNumber: '',
     expiryDate: '',
     cvv: '',
     saveCard: false,
@@ -100,6 +113,7 @@ const CourseEnrollment = ({ course, user }: CourseEnrollmentProps) => {
       billingDetails,
     };
 
+
     try {
       const response = await fetch('/api/enroll', {
         method: 'POST',
@@ -134,156 +148,260 @@ const CourseEnrollment = ({ course, user }: CourseEnrollmentProps) => {
           Enroll Now
         </Button>
       </DialogTrigger>
-      <DialogContent className='lg:w-[1000px] w-[100%]'>
-        <div className='flex w-full justify-between items-center border border-[#CAE1C2] p-2 rounded-md'>
+      <DialogContent className='lg:w-[1000px] w-[80%]  bg-[#f8f8f8] border-4 border-solid border-white'>
+        <div className='flex w-full justify-between items-center border border-[#CAE1C2] p-2 rounded-md '>
           <DialogTitle className='text-sm ml-3'>Check Out</DialogTitle>
           <DialogClose asChild>
-            <Button variant={'ghost'}>X</Button>
+            <Button variant={'ghost'}>X Cancel</Button>
           </DialogClose>
         </div>
         <div className='w-full'>
-          <div className='flex lg:flex-row flex-col gap-3'>
+          <div className='flex lg:flex-row flex-col gap-2'>
             <div className='lg:w-[60%] w-full flex-col'>
-              <div className='flex flex-col'>
-                <h1 className='text-sm font-bold mb-2'>Billing address</h1>
-                <div className='flex border border-[#CAE1C2] p-4 gap-5 rounded-md'>
-                  <div className='flex flex-col w-full'>
-                    <h1 className='text-xs font-bold mb-1'>Country</h1>
-                    <SelectCountry
-                      onChange={(country: string) =>
-                        setBillingDetails((prevDetails) => ({
-                          ...prevDetails,
-                          country,
-                        }))
-                      }
-                    />
-                  </div>
-                  <div className='flex flex-col w-full'>
-                    <h1 className='text-xs font-bold mb-1'>Zip Code</h1>
-                    <Input
-                      type='text'
-                      name='zipCode'
-                      value={billingDetails.zipCode}
-                      onChange={handleInputChange}
-                      placeholder='000-0000'
-                      className='w-full outline-none border border-[#CAE1C2]'
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className='flex flex-col mt-5'>
+              <div className='flex flex-col '>
                 <div className='flex justify-between'>
-                  <h1 className='text-sm font-bold mb-2'>Payment</h1>
-                  <h1 className='text-sm font-bold mb-2'>Secured Connection</h1>
+                  <h1 className='text-sm font-bold mb-1'>Payment</h1>
+                  <h1 className='text-sm font-bold mb-1'>Secured Connection</h1>
                 </div>
                 <div className='border border-[#CAE1C2] rounded-md'>
-                  <div className='w-full flex justify-between bg-[#CAE1C2] p-4'>
-                    <h1 className='text-xs font-bold'>Credit/Debit card</h1>
-                    <Image
-                      src='/images/card.png'
-                      alt=''
-                      width={50}
-                      height={20}
-                    />
+                  <div className='w-full flex justify-between bg-[#CAE1C2] p-2'>
+                    <div className='w-full flex gap-2'>
+                      <Image
+                          src='/images/card.png'
+                          alt=''
+                          width={20}
+                          height={20}
+                        />
+                        <h1 className='text-xs font-bold'>Pay with Card</h1>
+                      </div>
+                      <Image
+                        src='/images/card-type.png'
+                        alt=''
+                        width={50}
+                        height={20}
+                      />
                   </div>
-                  <div className='flex flex-col w-full p-4 gap-5'>
+                  <div className='flex flex-col w-full p-2 gap-3'>
                     <div className='flex flex-col w-full'>
                       <h1 className='text-xs font-bold mb-1'>Name on card</h1>
+                      <div className="relative">
+                      <img
+                        src="/images/user.png" 
+                        alt="User Icon"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                      />
                       <Input
                         type='text'
                         name='nameOnCard'
                         value={billingDetails.nameOnCard}
                         onChange={handleInputChange}
-                        className='w-full outline-none border border-[#CAE1C2]'
+                        className='w-full outline-none pl-10 border border-[#CAE1C2]'
                         placeholder='John Doe'
                       />
+                      </div>
                     </div>
                     <div className='flex flex-col w-full'>
                       <h1 className='text-xs font-bold mb-1'>Card Number</h1>
+                      <div className="relative">
+                      <img
+                        src="/images/card.png" 
+                        alt="card Icon"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                      />
                       <Input
                         type='number'
                         name='cardNumber'
                         value={billingDetails.cardNumber}
                         onChange={handleInputChange}
-                        className='w-full outline-none border border-[#CAE1C2]'
+                        className='w-full outline-none border border-[#CAE1C2] pl-10'
                         placeholder='0000-0000-0000-0000'
                       />
+                      </div>
                     </div>
                     <div className='flex w-full gap-3'>
                       <div className='flex flex-col w-full'>
                         <h1 className='text-xs font-bold mb-1'>Expiry Date</h1>
+                        <div className="relative">
+                        <img
+                          src="/images/calender.png" 
+                          alt="calender Icon"
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                        />
                         <Input
                           type='text'
                           name='expiryDate'
                           value={billingDetails.expiryDate}
                           onChange={handleInputChange}
-                          className='w-full outline-none border border-[#CAE1C2]'
+                          className='w-full outline-none border border-[#CAE1C2] pl-10'
                           placeholder='MM/YY'
                         />
+                        </div>
                       </div>
                       <div className='flex flex-col w-full'>
                         <h1 className='text-xs font-bold mb-1'>CVV</h1>
+                        <div className="relative">
+                        <img
+                          src="/images/lock.png" 
+                          alt="lock Icon"
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                        />
                         <Input
                           type='number'
                           name='cvv'
                           value={billingDetails.cvv}
                           onChange={handleInputChange}
-                          className='w-full outline-none border border-[#CAE1C2]'
+                          className='w-full outline-none border border-[#CAE1C2] pl-10'
                           placeholder='***'
                         />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <Accordion type="single" collapsible className=' mt-3'>
+                <AccordionItem value="item-1" className='border border-[#CAE1C2] rounded-md'>
+                  <AccordionTrigger className='bg-[#CAE1C2] p-2'>
+                    <div className='w-full flex gap-2 '>
+                     <Image
+                        src='/images/bank.png'
+                        alt=''
+                        width={20}
+                        height={20}
+                      />
+                      <h1 className='text-xs font-bold'>Pay with Bank</h1>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                  <div className='flex flex-col w-full p-2 gap-3'>
+                    <div className='flex flex-col w-full'>
+                      <h1 className='text-xs font-bold mb-1'>Account Name</h1>
+                      <div className="relative">
+                      <img
+                        src="/images/user.png" 
+                        alt="User Icon"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                      />
+                      <Input
+                        type='text'
+                        name='nameOnCard'
+                        value={billingDetails.accountName}
+                        onChange={handleInputChange}
+                        className='w-full outline-none border border-[#CAE1C2] pl-10'
+                        placeholder='John Doe'
+                      />
+                      </div>
+                    </div>
+                    <div className='flex flex-col w-full'>
+                      <h1 className='text-xs font-bold mb-1'>Account Number</h1>
+                      <div className="relative">
+                      <img
+                        src="/images/card.png" 
+                        alt="card Icon"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                      />
+                      <Input
+                        type='number'
+                        name='cardNumber'
+                        value={billingDetails.accountNumber}
+                        onChange={handleInputChange}
+                        className='w-full outline-none border border-[#CAE1C2] pl-10'
+                        placeholder='0000-0000-0000-0000'
+                      />
+                      </div>
+                    </div>
+                    <div className='flex w-full gap-3'>
+                      <div className='flex flex-col w-full'>
+                        <h1 className='text-xs font-bold mb-1'>Expiry Date</h1>
+                        <div className="relative">
+                        <img
+                          src="/images/calender.png" 
+                          alt="calender Icon"
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                        />
+                        <Input
+                          type='text'
+                          name='expiryDate'
+                          value={billingDetails.expiryDate}
+                          onChange={handleInputChange}
+                          className='w-full outline-none border border-[#CAE1C2] pl-10'
+                          placeholder='MM/YY'
+                        />
+                        </div>
+                      </div>
+                      <div className='flex flex-col w-full'>
+                        <h1 className='text-xs font-bold mb-1'>CVV</h1>
+                        <div className="relative">
+                        <img
+                          src="/images/lock.png" 
+                          alt="lock Icon"
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                        />
+                        <Input
+                          type='number'
+                          name='cvv'
+                          value={billingDetails.cvv}
+                          onChange={handleInputChange}
+                          className='w-full outline-none border border-[#CAE1C2] pl-10'
+                          placeholder='***'
+                        />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <div className='flex justify-between mt-2'>
                 <h1 className='text-xs font-bold'>
                   Securely save this card for my later purchase
                 </h1>
                 <Checkbox
-                // name='saveCard'
-                // checked={billingDetails.saveCard}
+                name='saveCard'
+                checked={billingDetails.saveCard}
                 // onChange={handleInputChange}
                 />
               </div>
+              
             </div>
             <div className='lg:w-[40%] w-full flex flex-col gap-3 lg:mt-6'>
               <div className='flex flex-col gap-3 border border-[#CAE1C2] rounded-md'>
-                <Image src='/images/card.png' alt='' width={50} height={150} />
+                <Image src='/images/card.png' alt='' width={10} height={10} />
                 <div className='p-2 bg-[#CAE1C2]'>
-                  <h1 className='text-sm mb-2 font-bold text-center'>
+                  <h1 className='text-sm mb-1 font-bold '>
+                  The Complete UI/UX Design Course for beginners
                     {course.title}
                   </h1>
-                  <div className='flex justify-around mb-2'>
+                  <div className='flex justify-start gap-2 mb-1'>
                     <h1 className='text-xs'>{course.sections} sections</h1>
                     <h1 className='text-xs'>{course.lessons} lessons</h1>
-                    <h1 className='text-xs'>{course.duration}</h1>
+                    <h1 className='text-xs'>{course.duration} duration</h1>
                   </div>
-                  <div className='flex p-2 gap-2'>
+                  <div className='flex gap-4'>
                     <p className='text-xs font-bold text-green-600'>
-                      ${course.discountedPrice}
+                      ${course.discountedPrice}100
                     </p>
-                    <del className='text-xs'>${course.originalPrice}</del>
+                    <del className='text-xs'>${course.originalPrice}150</del>
                   </div>
                 </div>
               </div>
-              <div className='flex flex-col gap-3 bg-[#CAE1C2] rounded-md p-3'>
+              <div className='flex flex-col gap-2 bg-[#CAE1C2] rounded-md p-2'>
                 <div className='flex justify-between'>
-                  <h1 className='text-xs font-bold mt-2'>Original price</h1>
+                  <h1 className='text-xs font-bold mt-1'>Original price</h1>
                   <p className='text-xs font-bold'>${course.originalPrice}</p>
                 </div>
                 <div className='flex justify-between'>
-                  <h1 className='text-xs font-bold mt-2'>Discount</h1>
+                  <h1 className='text-xs font-bold mt-1'>Discount</h1>
                   <p className='text-xs font-bold'>${course.discount}</p>
                 </div>
                 <Separator />
                 <div className='flex justify-between'>
-                  <h1 className='text-xs font-bold mt-2'>Sub-total</h1>
+                  <h1 className='text-xs font-bold mt-1'>Sub-total</h1>
                   <p className='text-xs font-bold'>${course.subTotal}</p>
                 </div>
                 <Separator />
                 <div className='flex justify-between'>
-                  <h1 className='text-xs font-bold mt-2'>Total</h1>
+                  <h1 className='text-xs font-bold mt-1'>Total</h1>
                   <p className='text-xs font-bold'>${course.total}</p>
                 </div>
               </div>
@@ -293,7 +411,9 @@ const CourseEnrollment = ({ course, user }: CourseEnrollmentProps) => {
                   conditions
                 </p>
               </div>
-              <Button onClick={handleSubmit}>Completed Checkout</Button>
+              <Button onClick={handleSubmit}>
+                <CourseSuccessful/>
+              </Button>
             </div>
           </div>
         </div>
