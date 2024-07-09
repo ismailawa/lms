@@ -46,9 +46,9 @@ export function DataTable<TData, TValue>({
  
   return (
     <div>
-        <div className="rounded-md border">
+        <div className="rounded-md border-b">
         <Table>
-            <TableHeader>
+            {/* <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -65,7 +65,7 @@ export function DataTable<TData, TValue>({
                 })}
                 </TableRow>
             ))}
-            </TableHeader>
+            </TableHeader> */}
             <TableBody>
             {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
@@ -96,6 +96,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          className="border border-gray-300"
         >
           Previous
         </Button>
@@ -104,6 +105,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          className="border border-gray-300"
         >
           Next
         </Button>
