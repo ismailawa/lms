@@ -9,7 +9,7 @@ async function getData(): Promise<Payment[]> {
     {
       id: "728ed52f",
       amount: 100,
-      status: "premium",
+      status: "Premium",
       name: "Invoice",
       date: "18-20-2019",
       downloadUrl: "/invoices/invoice1.pdf",
@@ -17,7 +17,15 @@ async function getData(): Promise<Payment[]> {
     {
         id: "728ed523",
         amount: 300,
-        status: "free",
+        status: "Basic",
+        name: "Invoice",
+        date: "18-23-2019",
+        downloadUrl: "/invoices/invoice1.pdf",
+      },
+    {
+        id: "728ed523",
+        amount: 300,
+        status: "Free",
         name: "Invoice",
         date: "18-23-2019",
         downloadUrl: "/invoices/invoice1.pdf",
@@ -30,12 +38,12 @@ export default async function InvoiceTable() {
   const data = await getData()
 
   return (
-    <div className="container mx-auto py-10 bg-white">
+    <div className="container mx-auto py-10 ">
         <div className="flex justify-between">
           <h1 className="text-sm font-bold mb-1 md:mb-2">Billing history</h1>
             <Button
                 variant="outline"
-                className="w-[130px] justify-between border border-gray-300"
+                className="w-[130px] justify-between border border-gray-300 bg-[#E1EDDDB2]"
                 >
                 <ArrowBigDown className="h-4 w-4 shrink-0 opacity-50" />
                 Most recent
