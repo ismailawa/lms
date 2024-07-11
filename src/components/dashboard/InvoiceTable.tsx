@@ -12,7 +12,7 @@ async function getData(): Promise<Payment[]> {
       status: "Premium",
       name: "Invoice",
       date: "18-20-2019",
-      downloadUrl: "/invoices/invoice1.pdf",
+      downloadUrl: "/invoice-test.pdf",
     },
     {
         id: "728ed523",
@@ -20,7 +20,7 @@ async function getData(): Promise<Payment[]> {
         status: "Basic",
         name: "Invoice",
         date: "18-23-2019",
-        downloadUrl: "/invoices/invoice1.pdf",
+        downloadUrl: "/invoice-test.pdf",
       },
     {
         id: "728ed523",
@@ -28,7 +28,7 @@ async function getData(): Promise<Payment[]> {
         status: "Free",
         name: "Invoice",
         date: "18-23-2019",
-        downloadUrl: "/invoices/invoice1.pdf",
+        downloadUrl: "/invoice-test.pdf",
       },
     // ...
   ]
