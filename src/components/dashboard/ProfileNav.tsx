@@ -20,7 +20,7 @@ interface ProfileNavProps {
 const ProfileNav: React.FC<ProfileNavProps> = ({ setSelectedPage }) => {
   return (
     <div className='bg-[#f8f8f8] border-4 border-solid border-white p-5 mx-1 rounded-2xl min-h-screen flex flex-col gap-6'>
-      <ul className='flex flex-col gap-6 mb-4 text-xs text-gray-600 font-medium'>
+      <ul className='flex flex-col gap-6 mb-6 text-xs text-gray-600 font-medium'>
         <Link
           href='#'
           onClick={() => setSelectedPage('profile')}
