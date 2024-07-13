@@ -46,8 +46,8 @@ export function DataTable<TData, TValue>({
  
   return (
     <div>
-        <div className="rounded-md border-b">
-        <Table>
+        <div className="rounded-md ">
+        <Table className="border-b border-[#D9D9D9]">
             {/* <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
@@ -70,6 +70,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                 <TableRow
+                    className="border-b border-[#D9D9D9]"
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                 >
@@ -96,7 +97,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="border border-gray-300"
+          className="border border-gray-300 bg-[#E1EDDDB2]"
         >
           Previous
         </Button>
@@ -105,7 +106,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="border border-gray-300"
+          className="border border-gray-300 bg-[#E1EDDDB2]"
         >
           Next
         </Button>
