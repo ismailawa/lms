@@ -6,24 +6,24 @@ import PricingCard from './PricingCard';
 type Plan = 'Free' | 'Basic Plan' | 'Premium Plan';
 
 const PricingSection: React.FC = () => {
-  const [currentPlan, setCurrentPlan] = useState<Plan>('Premium Plan');
+  const [currentPlan, setCurrentPlan] = useState<Plan>("Premium Plan");
 
   const plans = [
     {
       title: 'Free',
-      price: '$19/month',
+      price: '₦0.00/month',
       features: ['Multi-step Zaps', '3 Premium Apps', '2 Users team'],
       description: 'Get started for free',
     },
     {
       title: 'Basic Plan',
-      price: '$54/month',
+      price: '₦5400/month',
       features: ['Multi-step Zaps', 'Unlimited Premium', '50 Users team', 'Shared Workspace'],
       description: 'Optimal for small teams',
     },
     {
       title: 'Premium Plan',
-      price: '$89/month',
+      price: '₦18,000/month',
       features: ['Multi-step Zap', 'Unlimited Premium', 'Unlimited Users Team', 'Advanced Admin', 'Custom Data Retention'],
       description: 'Optimal for large teams',
     },

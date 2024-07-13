@@ -9,7 +9,7 @@ async function getData(): Promise<Payment[]> {
     {
       id: "728ed52f",
       amount: 100,
-      status: "Premium",
+      status: "Premium Plan",
       name: "Invoice",
       date: "18-20-2019",
       downloadUrl: "/invoice-test.pdf",
@@ -17,7 +17,7 @@ async function getData(): Promise<Payment[]> {
     {
         id: "728ed523",
         amount: 300,
-        status: "Basic",
+        status: "Basic Plan",
         name: "Invoice",
         date: "18-23-2019",
         downloadUrl: "/invoice-test.pdf",
@@ -25,7 +25,7 @@ async function getData(): Promise<Payment[]> {
     {
         id: "728ed523",
         amount: 300,
-        status: "Free",
+        status: "Basic Plan",
         name: "Invoice",
         date: "18-23-2019",
         downloadUrl: "/invoice-test.pdf",
