@@ -20,38 +20,38 @@ interface ProfileNavProps {
 const ProfileNav: React.FC<ProfileNavProps> = ({ setSelectedPage }) => {
   return (
     <div className='bg-[#f8f8f8] border-4 border-solid border-white p-5 mx-1 rounded-2xl min-h-screen flex flex-col gap-6'>
-      <ul className='flex flex-col gap-6 mb-6 text-xs text-gray-600 font-medium'>
+      <ul className='flex flex-col gap-6  text-xs text-gray-600 font-medium'>
         <Link
           href='#'
           onClick={() => setSelectedPage('profile')}
-          className='hover:text-green-500'
+          className=' text-lg hover:text-green-500'
         >
           Profile
         </Link>
         <Link
           href='#'
           onClick={() => setSelectedPage('security')}
-          className='hover:text-green-500'
+          className='text-lg hover:text-green-500'
         >
           Security
         </Link>
         <Link
           href='#'
           onClick={() => setSelectedPage('teams')}
-          className='hover:text-green-500'
+          className='hover:text-green-500 text-lg'
         >
           Teams
         </Link>
         <Link
           href='#'
           onClick={() => setSelectedPage('billing')}
-          className='hover:text-green-500'
+          className='hover:text-green-500 text-lg'
         >
           Billing
         </Link>
       </ul>
       <AlertDialog>
-        <AlertDialogTrigger className='text-sm text-red-500 font-bold mb-4 md:mb-6'>
+        <AlertDialogTrigger className=' text-red-500 font-bold mb-4 md:mb-6 text-lg'>
           Delete Account
         </AlertDialogTrigger>
         <AlertDialogContent>

@@ -1,5 +1,3 @@
-
-
 'use server';
 import { cookies } from 'next/headers';
 import { revalidateTag } from 'next/cache';
@@ -20,7 +18,10 @@ export async function getUserProfile() {
         next: { tags: ['profile'] },
       }
     );
-    console.log(response);
+
+    if (!response.ok) {
+      return new Error('Server error');
+    }
 
     const data = await response.json();
 

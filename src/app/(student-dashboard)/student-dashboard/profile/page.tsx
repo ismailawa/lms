@@ -45,7 +45,7 @@ const Profile: React.FC = () => {
     );
   }
 
-  const renderSelectedPage = () => {
+  const renderSelectedPage: any = () => {
     switch (selectedPage) {
       case 'profile':
         return <ProfileCard profile={profile} />;
@@ -61,11 +61,11 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className='min-h-screen'>
+    <div className='flex flex-col'>
       <h1 className='text-lg text-gray-500 font-bold mb-2 md:mb-3'>
         Account Settings
       </h1>
-      <div className='flex'>
+      <div className='flex gap-3'>
         <ProfileNav setSelectedPage={setSelectedPage} />
         {renderSelectedPage()}
       </div>
@@ -74,12 +74,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-
-// const Profile = async () => {
-//   const userProfile = await getUserProfile();
-//   console.log(userProfile);
-
-//   return <div>profile</div>;
-// };
-
-// export default Profile;

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState } from 'react';
 import PricingCard from './PricingCard';
@@ -18,13 +18,24 @@ const PricingSection: React.FC = () => {
     {
       title: 'Basic Plan',
       price: '$54/month',
-      features: ['Multi-step Zaps', 'Unlimited Premium', '50 Users team', 'Shared Workspace'],
+      features: [
+        'Multi-step Zaps',
+        'Unlimited Premium',
+        '50 Users team',
+        'Shared Workspace',
+      ],
       description: 'Optimal for small teams',
     },
     {
       title: 'Premium Plan',
       price: '$89/month',
-      features: ['Multi-step Zap', 'Unlimited Premium', 'Unlimited Users Team', 'Advanced Admin', 'Custom Data Retention'],
+      features: [
+        'Multi-step Zap',
+        'Unlimited Premium',
+        'Unlimited Users Team',
+        'Advanced Admin',
+        'Custom Data Retention',
+      ],
       description: 'Optimal for large teams',
     },
   ];
@@ -34,7 +45,7 @@ const PricingSection: React.FC = () => {
   };
 
   return (
-    <div className="flex  space-x-3 bg-[#FFFFFF80] p-4 rounded-2xl">
+    <div className='flex  space-x-3 bg-[#FFFFFF80] p-4 rounded-2xl w-full justify-between'>
       {plans.map((plan) => (
         <PricingCard
           key={plan.title}
@@ -51,4 +62,3 @@ const PricingSection: React.FC = () => {
 };
 
 export default PricingSection;
-
