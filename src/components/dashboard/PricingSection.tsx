@@ -11,13 +11,13 @@ const PricingSection: React.FC = () => {
   const plans = [
     {
       title: 'Free',
-      price: '$19/month',
+      price: '₦0.00/month',
       features: ['Multi-step Zaps', '3 Premium Apps', '2 Users team'],
       description: 'Get started for free',
     },
     {
       title: 'Basic Plan',
-      price: '$54/month',
+      price: '₦5400/month',
       features: [
         'Multi-step Zaps',
         'Unlimited Premium',
@@ -28,7 +28,7 @@ const PricingSection: React.FC = () => {
     },
     {
       title: 'Premium Plan',
-      price: '$89/month',
+      price: '₦18,000/month',
       features: [
         'Multi-step Zap',
         'Unlimited Premium',

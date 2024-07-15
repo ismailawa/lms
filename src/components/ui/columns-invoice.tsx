@@ -5,8 +5,8 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export type Payment = {
   id: string
-  amount: number
-  status: "Premium" | "Basic" | "Free"
+  amount: any
+  status: "Premium Plan" | "Basic Plan" | "Free"
   date: string
   name: string
   downloadUrl: string

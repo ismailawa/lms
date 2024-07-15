@@ -19,7 +19,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
 }) => {
   return (
     <div
-      className={`p-3 w-[250px] cursor-pointer rounded-2xl flex flex-col justify-between ${
+      className={`p-3 w-[250px] rounded-2xl flex flex-col justify-between ${
         isCurrent
           ? 'bg-[#00550E] text-white '
           : 'bg-[#FFFFFF80] text-black mt-3'
@@ -30,7 +30,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
           MOST POPULAR
         </p>
       )}
-      <p className='text-2xl font-bold mb-2'>{price}</p>
+      <p className='text-xl font-bold mb-2'>{price}</p>
       <h2 className='text-md font-bold mb-2'>{title}</h2>
       <p className='text-sm mb-4'>{description}</p>
       <ul className='mb-4'>
