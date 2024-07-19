@@ -1,4 +1,5 @@
 'use server';
+'use server';
 import { cookies } from 'next/headers';
 import { deleteCookies, setAuthCookie } from '@/lib/cookies';
 
@@ -88,3 +89,4 @@ export async function logoutAction() {
   deleteCookies('auth_token', { cookies });
   deleteCookies('currentUser', { cookies });
 }
+
